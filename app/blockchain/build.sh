@@ -6,4 +6,5 @@ cmake ..
 make
 
 # Run tests
-./test/BlockTest
+../bin/BlockTest
+../bin/BlockchainTest

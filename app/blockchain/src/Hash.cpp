@@ -1,9 +1,15 @@
 #include "Hash.h"
 #include <openssl/evp.h>
 #include "Utils.h"
+#include <iostream>
 
 namespace block_chain
 {
+  Hash::Hash()
+  {
+    hash_ = std::vector<uint8_t>();
+  }
+
   Hash::Hash(const std::vector<const uint8_t *> &input)
   {
     EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
