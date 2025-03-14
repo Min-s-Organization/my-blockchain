@@ -14,6 +14,7 @@ namespace block_chain
   public:
     ProofOfWork(Block &block);
     const void run();
+    bool isValid() const;
 
   private:
     Block &block_;

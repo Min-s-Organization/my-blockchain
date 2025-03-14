@@ -39,5 +39,6 @@ namespace block_chain
     std::unique_ptr<Hash> hash_;
     std::unique_ptr<Hash> prev_hash_;
     int64_t nonce_;
+    bool is_valid_;
   };
 }

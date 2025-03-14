@@ -20,6 +20,7 @@ namespace block_chain
 
     ProofOfWork pow(*this);
     pow.run();
+    is_valid_ = pow.isValid();
   }
 
   void Block::print() const
@@ -29,5 +30,6 @@ namespace block_chain
     std::cout << "Block timestamp: " << timestamp_ << std::endl;
     std::cout << "Block data: " << Utils::bytesToHex(data_) << std::endl;
     std::cout << "Block nonce: " << nonce_ << std::endl;
+    std::cout << "Block is valid: " << is_valid_ << std::endl;
   }
 }

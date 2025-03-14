@@ -63,4 +63,11 @@ namespace block_chain
     block_.setHash(hash);
     block_.setNonce(nonce);
   }
+
+  bool ProofOfWork::isValid() const
+  {
+    std::vector<uint8_t> input = prepare(block_.nonce());
+    Hash hash = Hash(input);
+    return hash.toBytes() < target_->toBytes() && hash.toBytes() == block_.hash().toBytes();
+  }
 }
