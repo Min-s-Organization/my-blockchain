@@ -1,7 +1,6 @@
 #include "Hash.h"
 #include <openssl/evp.h>
-#include <iostream>
-#include <iomanip>
+#include "Utils.h"
 
 namespace block_chain
 {
@@ -43,14 +42,6 @@ namespace block_chain
 
   std::string Hash::toHex() const
   {
-    std::stringstream ss;
-    ss << std::hex << std::setfill('0');
-
-    for (const auto &byte : this->hash_)
-    {
-      ss << std::setw(2) << static_cast<int>(byte);
-    }
-
-    return ss.str();
+    return Utils::bytesToHex(this->hash_);
   }
 }

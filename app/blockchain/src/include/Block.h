@@ -14,6 +14,7 @@ namespace block_chain
     Block(const std::vector<uint8_t> &data, const std::vector<uint8_t> &prev_hash);
     ~Block() = default;
     const Hash &getHash() const { return hash_; };
+    void print() const;
 
   private:
     time_t timestamp_;
