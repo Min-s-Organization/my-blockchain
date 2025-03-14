@@ -2,11 +2,12 @@
 #include <iostream>
 #include "Utils.h"
 #include <vector>
+#include "ProofOfWork.h"
 
 namespace block_chain
 {
   Block::Block(const std::vector<uint8_t> &data, const Hash &prev_hash)
-      : data_(data), prev_hash_(prev_hash)
+      : data_(data), prev_hash_(std::make_unique<Hash>(prev_hash))
   {
     timestamp_ = time(nullptr);
     std::vector<const uint8_t *> input;
@@ -16,14 +17,17 @@ namespace block_chain
       input.push_back(prev_hash.toBytes().data());
 
     input.push_back(reinterpret_cast<const uint8_t *>(&timestamp_));
-    hash_ = Hash(input);
+
+    ProofOfWork pow(*this);
+    pow.run();
   }
 
   void Block::print() const
   {
-    std::cout << "Block hash: " << hash_.toHex() << std::endl;
-    std::cout << "Block prev hash: " << prev_hash_.toHex() << std::endl;
+    std::cout << "Block hash: " << hash_->toHex() << std::endl;
+    std::cout << "Block prev hash: " << prev_hash_->toHex() << std::endl;
     std::cout << "Block timestamp: " << timestamp_ << std::endl;
     std::cout << "Block data: " << Utils::bytesToHex(data_) << std::endl;
+    std::cout << "Block nonce: " << nonce_ << std::endl;
   }
 }

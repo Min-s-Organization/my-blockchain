@@ -11,10 +11,10 @@ namespace block_chain
     Blockchain() : blocks_() {}
     ~Blockchain() = default;
     void addBlock(std::string data);
-    const Block &getLatestBlock() const;
+    const Block &lastBlock() const;
     void print() const;
 
   private:
-    std::vector<Block> blocks_;
+    std::vector<std::unique_ptr<Block>> blocks_;
   };
 };

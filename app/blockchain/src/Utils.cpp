@@ -25,4 +25,11 @@ namespace block_chain
       bytes.push_back(static_cast<uint8_t>(byte));
     return bytes;
   }
+
+  std::string Utils::intToHex(int64_t value)
+  {
+    std::stringstream ss;
+    ss << std::hex << value;
+    return ss.str();
+  }
 }

@@ -10,8 +10,14 @@ namespace block_chain
     hash_ = std::vector<uint8_t>();
   }
 
-  Hash::Hash(const std::vector<const uint8_t *> &input)
+  Hash::Hash(const std::vector<uint8_t> &input, bool is_hash)
   {
+    if (is_hash)
+    {
+      hash_ = input;
+      return;
+    }
+
     EVP_MD_CTX *mdctx = EVP_MD_CTX_new();
     if (mdctx == nullptr)
       exit(-1);
@@ -23,14 +29,10 @@ namespace block_chain
       exit(-1);
     }
 
-    // add input to calculate hash
-    for (const auto &data : input)
+    if (1 != EVP_DigestUpdate(mdctx, input.data(), input.size()))
     {
-      if (1 != EVP_DigestUpdate(mdctx, data, sizeof(data)))
-      {
-        EVP_MD_CTX_free(mdctx);
-        exit(-1);
-      }
+      EVP_MD_CTX_free(mdctx);
+      exit(-1);
     }
 
     this->hash_.resize(EVP_MD_size(EVP_sha256()));
