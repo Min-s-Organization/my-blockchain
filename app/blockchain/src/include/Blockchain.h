@@ -18,7 +18,7 @@ namespace block_chain
 
     static void createBlockchain(std::string db_name, std::unique_ptr<Blockchain> &blockchain);
 
-    ~Blockchain() = default;
+    ~Blockchain() { delete db_; }
     void addBlock(std::string data);
     const Block &lastBlock() const;
     void print() const;

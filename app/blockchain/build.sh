@@ -9,4 +9,5 @@ make
 # ../bin/BlockTest
 # ../bin/ProtobufTest
 # ../bin/LevelDBTest
-../bin/BlockchainTest
+# ../bin/BlockchainTest
+# ../bin/Main

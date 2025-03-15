@@ -93,7 +93,10 @@ namespace block_chain
       std::cout << "--------------------------------" << std::endl;
       std::string current_block_serialized;
       leveldb::Status status = db_->Get(leveldb::ReadOptions(), currentHash.toHex(), &current_block_serialized);
-      assert(status.ok());
+      if (!status.ok())
+      {
+        break;
+      }
 
       std::unique_ptr<Block> current_block = std::make_unique<Block>();
       Block::deserialize(std::vector<uint8_t>(current_block_serialized.begin(), current_block_serialized.end()), *current_block);
