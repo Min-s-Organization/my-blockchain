@@ -86,17 +86,19 @@ namespace block_chain
 
   void Blockchain::print() const
   {
-    leveldb::Iterator *it = db_->NewIterator(leveldb::ReadOptions());
-    for (it->SeekToFirst(); it->Valid(); it->Next())
+    last_block_->print();
+    Hash currentHash = last_block_->prev_hash();
+    do
     {
-      std::string key = it->key().ToString();
-      std::string value = it->value().ToString();
-
-      Block block;
-      block.deserialize(std::vector<uint8_t>(value.begin(), value.end()), block);
-      block.print();
       std::cout << "--------------------------------" << std::endl;
-    }
-    delete it;
+      std::string current_block_serialized;
+      leveldb::Status status = db_->Get(leveldb::ReadOptions(), currentHash.toHex(), &current_block_serialized);
+      assert(status.ok());
+
+      std::unique_ptr<Block> current_block = std::make_unique<Block>();
+      Block::deserialize(std::vector<uint8_t>(current_block_serialized.begin(), current_block_serialized.end()), *current_block);
+      current_block->print();
+      currentHash = current_block->prev_hash();
+    } while (!currentHash.isEmpty());
   }
 }

@@ -14,6 +14,7 @@ namespace block_chain
     ~Hash() = default;
     const std::vector<uint8_t> &toBytes() const { return hash_; };
     std::string toHex() const;
+    bool isEmpty() const { return hash_.empty(); }
 
   private:
     std::vector<uint8_t> hash_;

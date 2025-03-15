@@ -10,7 +10,6 @@ int main()
   std::unique_ptr<Blockchain> blockchain;
   Blockchain::createBlockchain(Blockchain::BLOCK_CHAIN_DB_NAME, blockchain);
 
-  blockchain->addBlock("Genesis Block");
   blockchain->addBlock("transaction 1");
   blockchain->addBlock("transaction 2");
   blockchain->addBlock("transaction 3");
