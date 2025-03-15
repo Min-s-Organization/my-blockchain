@@ -13,6 +13,7 @@ namespace block_chain
   {
   public:
     Block(const std::vector<uint8_t> &data, const Hash &prev_hash);
+    Block() = default;
     ~Block() = default;
 
     const Hash &hash() const { return *hash_; };
@@ -32,6 +33,9 @@ namespace block_chain
     int64_t nonce() const { return nonce_; }
 
     void print() const;
+
+    static void serialize(const Block &block, std::vector<uint8_t> &data);
+    static void deserialize(const std::vector<uint8_t> &data, Block &block);
 
   private:
     time_t timestamp_;

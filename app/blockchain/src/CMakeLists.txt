@@ -1,11 +1,16 @@
 find_package(OpenSSL REQUIRED)
 
 aux_source_directory(. SRC_LIST)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/protobuf PROTOBUF_SRC_LIST)
 
-include_directories(./include)
+find_package(Protobuf REQUIRED)
+include_directories(${Protobuf_INCLUDE_DIRS})
 
-add_library(Block SHARED ${SRC_LIST})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/protobuf)
+
+add_library(Block SHARED ${SRC_LIST} ${PROTOBUF_SRC_LIST})
 add_library(Blockchain SHARED ${SRC_LIST})
 
-target_link_libraries(Block PUBLIC OpenSSL::Crypto)
+target_link_libraries(Block PUBLIC OpenSSL::Crypto ${Protobuf_LIBRARIES})
 target_link_libraries(Blockchain PUBLIC Block)

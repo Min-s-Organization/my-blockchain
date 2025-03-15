@@ -1,0 +1,1 @@
+protoc --cpp_out=src/protobuf --proto_path=src/protobuf block.proto

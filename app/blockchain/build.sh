@@ -7,4 +7,4 @@ make
 
 # Run tests
 # ../bin/BlockTest
-../bin/BlockchainTest
+../bin/ProtobufTest

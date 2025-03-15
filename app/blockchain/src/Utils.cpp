@@ -17,6 +17,11 @@ namespace block_chain
     return ss.str();
   }
 
+  std::string Utils::bytesToString(const std::vector<uint8_t> &bytes)
+  {
+    return std::string(bytes.begin(), bytes.end());
+  }
+
   std::vector<uint8_t> Utils::stringToBytes(const std::string &data)
   {
     std::vector<uint8_t> bytes;
