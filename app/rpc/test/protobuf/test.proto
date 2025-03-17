@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package test;
+
+message LoginRequest
+{
+  string name = 1;
+  string pwd = 2;
+}
+
+message LoginResponse
+{
+  int32 code = 1;
+  string msg = 2;
+}

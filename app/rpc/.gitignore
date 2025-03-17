@@ -1,0 +1,27 @@
+# Build output
+/build/
+
+# Binary files
+/bin/
+
+# IDE and editor files
+.idea/
+.vscode/
+
+# Compiled object files
+*.o
+*.obj
+
+# Compiled libraries
+*.so
+*.dylib
+*.dll
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+
+CMakeFiles/
+/log
