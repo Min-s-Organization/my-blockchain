@@ -4,23 +4,24 @@
 #include <cstdint>
 #include <ctime>
 #include <openssl/ssl.h>
-#include "Hash.h"
 #include <memory>
+#include "Transaction.h"
+#include "Hash.h"
 
 namespace block_chain
 {
   class Block
   {
   public:
-    Block(const std::vector<uint8_t> &data, const Hash &prev_hash);
+    Block(const std::vector<Transaction> &transactions, const Hash &prev_hash);
     Block() = default;
     ~Block() = default;
 
-    const Hash &hash() const { return *hash_; };
-    void setHash(const Hash &hash) { hash_ = std::make_unique<Hash>(hash); }
+    const Hash &hash() const { return hash_; };
+    void setHash(const Hash &hash) { hash_ = hash; }
 
-    const std::vector<uint8_t> &data() const { return data_; }
-    const Hash &prev_hash() const { return *prev_hash_; }
+    const std::vector<Transaction> &transactions() const { return transactions_; }
+    const Hash &prev_hash() const { return prev_hash_; }
 
     const time_t &timestamp() const { return timestamp_; }
     std::vector<uint8_t> timestampToBytes() const
@@ -34,14 +35,14 @@ namespace block_chain
 
     void print() const;
 
-    static void serialize(const Block &block, std::vector<uint8_t> &data);
-    static void deserialize(const std::vector<uint8_t> &data, Block &block);
+    static std::vector<uint8_t> serialize(const Block &block);
+    static Block deserialize(const std::vector<uint8_t> &data);
 
   private:
     time_t timestamp_;
-    std::vector<uint8_t> data_;
-    std::unique_ptr<Hash> hash_;
-    std::unique_ptr<Hash> prev_hash_;
+    std::vector<Transaction> transactions_;
+    Hash hash_;
+    Hash prev_hash_;
     int64_t nonce_;
     bool is_valid_;
   };

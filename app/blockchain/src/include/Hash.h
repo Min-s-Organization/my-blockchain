@@ -10,6 +10,7 @@ namespace block_chain
   {
   public:
     Hash(const std::vector<uint8_t> &input, bool is_hash = false);
+    Hash(const std::string &input);
     Hash();
     ~Hash() = default;
     const std::vector<uint8_t> &toBytes() const { return hash_; };

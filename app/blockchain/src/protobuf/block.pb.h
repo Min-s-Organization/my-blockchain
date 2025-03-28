@@ -48,9 +48,21 @@ namespace block_chain {
 class BlockProto;
 struct BlockProtoDefaultTypeInternal;
 extern BlockProtoDefaultTypeInternal _BlockProto_default_instance_;
+class TransactionInputProto;
+struct TransactionInputProtoDefaultTypeInternal;
+extern TransactionInputProtoDefaultTypeInternal _TransactionInputProto_default_instance_;
+class TransactionOutputProto;
+struct TransactionOutputProtoDefaultTypeInternal;
+extern TransactionOutputProtoDefaultTypeInternal _TransactionOutputProto_default_instance_;
+class TransactionProto;
+struct TransactionProtoDefaultTypeInternal;
+extern TransactionProtoDefaultTypeInternal _TransactionProto_default_instance_;
 }  // namespace block_chain
 PROTOBUF_NAMESPACE_OPEN
 template<> ::block_chain::BlockProto* Arena::CreateMaybeMessage<::block_chain::BlockProto>(Arena*);
+template<> ::block_chain::TransactionInputProto* Arena::CreateMaybeMessage<::block_chain::TransactionInputProto>(Arena*);
+template<> ::block_chain::TransactionOutputProto* Arena::CreateMaybeMessage<::block_chain::TransactionOutputProto>(Arena*);
+template<> ::block_chain::TransactionProto* Arena::CreateMaybeMessage<::block_chain::TransactionProto>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace block_chain {
 
@@ -177,26 +189,30 @@ class BlockProto final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDataFieldNumber = 1,
+    kTransactionsFieldNumber = 1,
     kHashFieldNumber = 3,
     kPrevHashFieldNumber = 4,
     kTimestampFieldNumber = 2,
     kNonceFieldNumber = 5,
     kIsValidFieldNumber = 6,
   };
-  // bytes data = 1;
-  void clear_data();
-  const std::string& data() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_data(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_data();
-  PROTOBUF_NODISCARD std::string* release_data();
-  void set_allocated_data(std::string* data);
+  // repeated .block_chain.TransactionProto transactions = 1;
+  int transactions_size() const;
   private:
-  const std::string& _internal_data() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
-  std::string* _internal_mutable_data();
+  int _internal_transactions_size() const;
   public:
+  void clear_transactions();
+  ::block_chain::TransactionProto* mutable_transactions(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionProto >*
+      mutable_transactions();
+  private:
+  const ::block_chain::TransactionProto& _internal_transactions(int index) const;
+  ::block_chain::TransactionProto* _internal_add_transactions();
+  public:
+  const ::block_chain::TransactionProto& transactions(int index) const;
+  ::block_chain::TransactionProto* add_transactions();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionProto >&
+      transactions() const;
 
   // bytes hash = 3;
   void clear_hash();
@@ -261,12 +277,554 @@ class BlockProto final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionProto > transactions_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr prev_hash_;
     int64_t timestamp_;
     int64_t nonce_;
     bool is_valid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_block_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TransactionProto final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:block_chain.TransactionProto) */ {
+ public:
+  inline TransactionProto() : TransactionProto(nullptr) {}
+  ~TransactionProto() override;
+  explicit PROTOBUF_CONSTEXPR TransactionProto(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TransactionProto(const TransactionProto& from);
+  TransactionProto(TransactionProto&& from) noexcept
+    : TransactionProto() {
+    *this = ::std::move(from);
+  }
+
+  inline TransactionProto& operator=(const TransactionProto& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransactionProto& operator=(TransactionProto&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransactionProto& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransactionProto* internal_default_instance() {
+    return reinterpret_cast<const TransactionProto*>(
+               &_TransactionProto_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(TransactionProto& a, TransactionProto& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransactionProto* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransactionProto* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TransactionProto* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransactionProto>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransactionProto& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TransactionProto& from) {
+    TransactionProto::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransactionProto* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "block_chain.TransactionProto";
+  }
+  protected:
+  explicit TransactionProto(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInputsFieldNumber = 2,
+    kOutputsFieldNumber = 3,
+    kTxIdFieldNumber = 1,
+  };
+  // repeated .block_chain.TransactionInputProto inputs = 2;
+  int inputs_size() const;
+  private:
+  int _internal_inputs_size() const;
+  public:
+  void clear_inputs();
+  ::block_chain::TransactionInputProto* mutable_inputs(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionInputProto >*
+      mutable_inputs();
+  private:
+  const ::block_chain::TransactionInputProto& _internal_inputs(int index) const;
+  ::block_chain::TransactionInputProto* _internal_add_inputs();
+  public:
+  const ::block_chain::TransactionInputProto& inputs(int index) const;
+  ::block_chain::TransactionInputProto* add_inputs();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionInputProto >&
+      inputs() const;
+
+  // repeated .block_chain.TransactionOutputProto outputs = 3;
+  int outputs_size() const;
+  private:
+  int _internal_outputs_size() const;
+  public:
+  void clear_outputs();
+  ::block_chain::TransactionOutputProto* mutable_outputs(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionOutputProto >*
+      mutable_outputs();
+  private:
+  const ::block_chain::TransactionOutputProto& _internal_outputs(int index) const;
+  ::block_chain::TransactionOutputProto* _internal_add_outputs();
+  public:
+  const ::block_chain::TransactionOutputProto& outputs(int index) const;
+  ::block_chain::TransactionOutputProto* add_outputs();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionOutputProto >&
+      outputs() const;
+
+  // string tx_id = 1;
+  void clear_tx_id();
+  const std::string& tx_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_tx_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_tx_id();
+  PROTOBUF_NODISCARD std::string* release_tx_id();
+  void set_allocated_tx_id(std::string* tx_id);
+  private:
+  const std::string& _internal_tx_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_tx_id(const std::string& value);
+  std::string* _internal_mutable_tx_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:block_chain.TransactionProto)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionInputProto > inputs_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionOutputProto > outputs_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr tx_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_block_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TransactionInputProto final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:block_chain.TransactionInputProto) */ {
+ public:
+  inline TransactionInputProto() : TransactionInputProto(nullptr) {}
+  ~TransactionInputProto() override;
+  explicit PROTOBUF_CONSTEXPR TransactionInputProto(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TransactionInputProto(const TransactionInputProto& from);
+  TransactionInputProto(TransactionInputProto&& from) noexcept
+    : TransactionInputProto() {
+    *this = ::std::move(from);
+  }
+
+  inline TransactionInputProto& operator=(const TransactionInputProto& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransactionInputProto& operator=(TransactionInputProto&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransactionInputProto& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransactionInputProto* internal_default_instance() {
+    return reinterpret_cast<const TransactionInputProto*>(
+               &_TransactionInputProto_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(TransactionInputProto& a, TransactionInputProto& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransactionInputProto* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransactionInputProto* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TransactionInputProto* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransactionInputProto>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransactionInputProto& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TransactionInputProto& from) {
+    TransactionInputProto::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransactionInputProto* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "block_chain.TransactionInputProto";
+  }
+  protected:
+  explicit TransactionInputProto(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTxIdFieldNumber = 1,
+    kScriptSigFieldNumber = 3,
+    kVoutFieldNumber = 2,
+  };
+  // string tx_id = 1;
+  void clear_tx_id();
+  const std::string& tx_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_tx_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_tx_id();
+  PROTOBUF_NODISCARD std::string* release_tx_id();
+  void set_allocated_tx_id(std::string* tx_id);
+  private:
+  const std::string& _internal_tx_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_tx_id(const std::string& value);
+  std::string* _internal_mutable_tx_id();
+  public:
+
+  // string script_sig = 3;
+  void clear_script_sig();
+  const std::string& script_sig() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_script_sig(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_script_sig();
+  PROTOBUF_NODISCARD std::string* release_script_sig();
+  void set_allocated_script_sig(std::string* script_sig);
+  private:
+  const std::string& _internal_script_sig() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_script_sig(const std::string& value);
+  std::string* _internal_mutable_script_sig();
+  public:
+
+  // int64 vout = 2;
+  void clear_vout();
+  int64_t vout() const;
+  void set_vout(int64_t value);
+  private:
+  int64_t _internal_vout() const;
+  void _internal_set_vout(int64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:block_chain.TransactionInputProto)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr tx_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr script_sig_;
+    int64_t vout_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_block_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TransactionOutputProto final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:block_chain.TransactionOutputProto) */ {
+ public:
+  inline TransactionOutputProto() : TransactionOutputProto(nullptr) {}
+  ~TransactionOutputProto() override;
+  explicit PROTOBUF_CONSTEXPR TransactionOutputProto(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TransactionOutputProto(const TransactionOutputProto& from);
+  TransactionOutputProto(TransactionOutputProto&& from) noexcept
+    : TransactionOutputProto() {
+    *this = ::std::move(from);
+  }
+
+  inline TransactionOutputProto& operator=(const TransactionOutputProto& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransactionOutputProto& operator=(TransactionOutputProto&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransactionOutputProto& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransactionOutputProto* internal_default_instance() {
+    return reinterpret_cast<const TransactionOutputProto*>(
+               &_TransactionOutputProto_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(TransactionOutputProto& a, TransactionOutputProto& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransactionOutputProto* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransactionOutputProto* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TransactionOutputProto* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransactionOutputProto>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransactionOutputProto& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TransactionOutputProto& from) {
+    TransactionOutputProto::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransactionOutputProto* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "block_chain.TransactionOutputProto";
+  }
+  protected:
+  explicit TransactionOutputProto(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 1,
+    kAmountFieldNumber = 2,
+  };
+  // string address = 1;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string amount = 2;
+  void clear_amount();
+  const std::string& amount() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_amount(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_amount();
+  PROTOBUF_NODISCARD std::string* release_amount();
+  void set_allocated_amount(std::string* amount);
+  private:
+  const std::string& _internal_amount() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_amount(const std::string& value);
+  std::string* _internal_mutable_amount();
+  public:
+
+  // @@protoc_insertion_point(class_scope:block_chain.TransactionOutputProto)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr amount_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -283,54 +841,44 @@ class BlockProto final :
 #endif  // __GNUC__
 // BlockProto
 
-// bytes data = 1;
-inline void BlockProto::clear_data() {
-  _impl_.data_.ClearToEmpty();
+// repeated .block_chain.TransactionProto transactions = 1;
+inline int BlockProto::_internal_transactions_size() const {
+  return _impl_.transactions_.size();
 }
-inline const std::string& BlockProto::data() const {
-  // @@protoc_insertion_point(field_get:block_chain.BlockProto.data)
-  return _internal_data();
+inline int BlockProto::transactions_size() const {
+  return _internal_transactions_size();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void BlockProto::set_data(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:block_chain.BlockProto.data)
+inline void BlockProto::clear_transactions() {
+  _impl_.transactions_.Clear();
 }
-inline std::string* BlockProto::mutable_data() {
-  std::string* _s = _internal_mutable_data();
-  // @@protoc_insertion_point(field_mutable:block_chain.BlockProto.data)
-  return _s;
+inline ::block_chain::TransactionProto* BlockProto::mutable_transactions(int index) {
+  // @@protoc_insertion_point(field_mutable:block_chain.BlockProto.transactions)
+  return _impl_.transactions_.Mutable(index);
 }
-inline const std::string& BlockProto::_internal_data() const {
-  return _impl_.data_.Get();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionProto >*
+BlockProto::mutable_transactions() {
+  // @@protoc_insertion_point(field_mutable_list:block_chain.BlockProto.transactions)
+  return &_impl_.transactions_;
 }
-inline void BlockProto::_internal_set_data(const std::string& value) {
-  
-  _impl_.data_.Set(value, GetArenaForAllocation());
+inline const ::block_chain::TransactionProto& BlockProto::_internal_transactions(int index) const {
+  return _impl_.transactions_.Get(index);
 }
-inline std::string* BlockProto::_internal_mutable_data() {
-  
-  return _impl_.data_.Mutable(GetArenaForAllocation());
+inline const ::block_chain::TransactionProto& BlockProto::transactions(int index) const {
+  // @@protoc_insertion_point(field_get:block_chain.BlockProto.transactions)
+  return _internal_transactions(index);
 }
-inline std::string* BlockProto::release_data() {
-  // @@protoc_insertion_point(field_release:block_chain.BlockProto.data)
-  return _impl_.data_.Release();
+inline ::block_chain::TransactionProto* BlockProto::_internal_add_transactions() {
+  return _impl_.transactions_.Add();
 }
-inline void BlockProto::set_allocated_data(std::string* data) {
-  if (data != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.data_.IsDefault()) {
-    _impl_.data_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:block_chain.BlockProto.data)
+inline ::block_chain::TransactionProto* BlockProto::add_transactions() {
+  ::block_chain::TransactionProto* _add = _internal_add_transactions();
+  // @@protoc_insertion_point(field_add:block_chain.BlockProto.transactions)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionProto >&
+BlockProto::transactions() const {
+  // @@protoc_insertion_point(field_list:block_chain.BlockProto.transactions)
+  return _impl_.transactions_;
 }
 
 // int64 timestamp = 2;
@@ -493,9 +1041,377 @@ inline void BlockProto::set_is_valid(bool value) {
   // @@protoc_insertion_point(field_set:block_chain.BlockProto.is_valid)
 }
 
+// -------------------------------------------------------------------
+
+// TransactionProto
+
+// string tx_id = 1;
+inline void TransactionProto::clear_tx_id() {
+  _impl_.tx_id_.ClearToEmpty();
+}
+inline const std::string& TransactionProto::tx_id() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionProto.tx_id)
+  return _internal_tx_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionProto::set_tx_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.tx_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionProto.tx_id)
+}
+inline std::string* TransactionProto::mutable_tx_id() {
+  std::string* _s = _internal_mutable_tx_id();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionProto.tx_id)
+  return _s;
+}
+inline const std::string& TransactionProto::_internal_tx_id() const {
+  return _impl_.tx_id_.Get();
+}
+inline void TransactionProto::_internal_set_tx_id(const std::string& value) {
+  
+  _impl_.tx_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionProto::_internal_mutable_tx_id() {
+  
+  return _impl_.tx_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionProto::release_tx_id() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionProto.tx_id)
+  return _impl_.tx_id_.Release();
+}
+inline void TransactionProto::set_allocated_tx_id(std::string* tx_id) {
+  if (tx_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.tx_id_.SetAllocated(tx_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.tx_id_.IsDefault()) {
+    _impl_.tx_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionProto.tx_id)
+}
+
+// repeated .block_chain.TransactionInputProto inputs = 2;
+inline int TransactionProto::_internal_inputs_size() const {
+  return _impl_.inputs_.size();
+}
+inline int TransactionProto::inputs_size() const {
+  return _internal_inputs_size();
+}
+inline void TransactionProto::clear_inputs() {
+  _impl_.inputs_.Clear();
+}
+inline ::block_chain::TransactionInputProto* TransactionProto::mutable_inputs(int index) {
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionProto.inputs)
+  return _impl_.inputs_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionInputProto >*
+TransactionProto::mutable_inputs() {
+  // @@protoc_insertion_point(field_mutable_list:block_chain.TransactionProto.inputs)
+  return &_impl_.inputs_;
+}
+inline const ::block_chain::TransactionInputProto& TransactionProto::_internal_inputs(int index) const {
+  return _impl_.inputs_.Get(index);
+}
+inline const ::block_chain::TransactionInputProto& TransactionProto::inputs(int index) const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionProto.inputs)
+  return _internal_inputs(index);
+}
+inline ::block_chain::TransactionInputProto* TransactionProto::_internal_add_inputs() {
+  return _impl_.inputs_.Add();
+}
+inline ::block_chain::TransactionInputProto* TransactionProto::add_inputs() {
+  ::block_chain::TransactionInputProto* _add = _internal_add_inputs();
+  // @@protoc_insertion_point(field_add:block_chain.TransactionProto.inputs)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionInputProto >&
+TransactionProto::inputs() const {
+  // @@protoc_insertion_point(field_list:block_chain.TransactionProto.inputs)
+  return _impl_.inputs_;
+}
+
+// repeated .block_chain.TransactionOutputProto outputs = 3;
+inline int TransactionProto::_internal_outputs_size() const {
+  return _impl_.outputs_.size();
+}
+inline int TransactionProto::outputs_size() const {
+  return _internal_outputs_size();
+}
+inline void TransactionProto::clear_outputs() {
+  _impl_.outputs_.Clear();
+}
+inline ::block_chain::TransactionOutputProto* TransactionProto::mutable_outputs(int index) {
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionProto.outputs)
+  return _impl_.outputs_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionOutputProto >*
+TransactionProto::mutable_outputs() {
+  // @@protoc_insertion_point(field_mutable_list:block_chain.TransactionProto.outputs)
+  return &_impl_.outputs_;
+}
+inline const ::block_chain::TransactionOutputProto& TransactionProto::_internal_outputs(int index) const {
+  return _impl_.outputs_.Get(index);
+}
+inline const ::block_chain::TransactionOutputProto& TransactionProto::outputs(int index) const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionProto.outputs)
+  return _internal_outputs(index);
+}
+inline ::block_chain::TransactionOutputProto* TransactionProto::_internal_add_outputs() {
+  return _impl_.outputs_.Add();
+}
+inline ::block_chain::TransactionOutputProto* TransactionProto::add_outputs() {
+  ::block_chain::TransactionOutputProto* _add = _internal_add_outputs();
+  // @@protoc_insertion_point(field_add:block_chain.TransactionProto.outputs)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::block_chain::TransactionOutputProto >&
+TransactionProto::outputs() const {
+  // @@protoc_insertion_point(field_list:block_chain.TransactionProto.outputs)
+  return _impl_.outputs_;
+}
+
+// -------------------------------------------------------------------
+
+// TransactionInputProto
+
+// string tx_id = 1;
+inline void TransactionInputProto::clear_tx_id() {
+  _impl_.tx_id_.ClearToEmpty();
+}
+inline const std::string& TransactionInputProto::tx_id() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.tx_id)
+  return _internal_tx_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionInputProto::set_tx_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.tx_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.tx_id)
+}
+inline std::string* TransactionInputProto::mutable_tx_id() {
+  std::string* _s = _internal_mutable_tx_id();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionInputProto.tx_id)
+  return _s;
+}
+inline const std::string& TransactionInputProto::_internal_tx_id() const {
+  return _impl_.tx_id_.Get();
+}
+inline void TransactionInputProto::_internal_set_tx_id(const std::string& value) {
+  
+  _impl_.tx_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::_internal_mutable_tx_id() {
+  
+  return _impl_.tx_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::release_tx_id() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionInputProto.tx_id)
+  return _impl_.tx_id_.Release();
+}
+inline void TransactionInputProto::set_allocated_tx_id(std::string* tx_id) {
+  if (tx_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.tx_id_.SetAllocated(tx_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.tx_id_.IsDefault()) {
+    _impl_.tx_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionInputProto.tx_id)
+}
+
+// int64 vout = 2;
+inline void TransactionInputProto::clear_vout() {
+  _impl_.vout_ = int64_t{0};
+}
+inline int64_t TransactionInputProto::_internal_vout() const {
+  return _impl_.vout_;
+}
+inline int64_t TransactionInputProto::vout() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.vout)
+  return _internal_vout();
+}
+inline void TransactionInputProto::_internal_set_vout(int64_t value) {
+  
+  _impl_.vout_ = value;
+}
+inline void TransactionInputProto::set_vout(int64_t value) {
+  _internal_set_vout(value);
+  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.vout)
+}
+
+// string script_sig = 3;
+inline void TransactionInputProto::clear_script_sig() {
+  _impl_.script_sig_.ClearToEmpty();
+}
+inline const std::string& TransactionInputProto::script_sig() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.script_sig)
+  return _internal_script_sig();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionInputProto::set_script_sig(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.script_sig_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.script_sig)
+}
+inline std::string* TransactionInputProto::mutable_script_sig() {
+  std::string* _s = _internal_mutable_script_sig();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionInputProto.script_sig)
+  return _s;
+}
+inline const std::string& TransactionInputProto::_internal_script_sig() const {
+  return _impl_.script_sig_.Get();
+}
+inline void TransactionInputProto::_internal_set_script_sig(const std::string& value) {
+  
+  _impl_.script_sig_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::_internal_mutable_script_sig() {
+  
+  return _impl_.script_sig_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::release_script_sig() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionInputProto.script_sig)
+  return _impl_.script_sig_.Release();
+}
+inline void TransactionInputProto::set_allocated_script_sig(std::string* script_sig) {
+  if (script_sig != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.script_sig_.SetAllocated(script_sig, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.script_sig_.IsDefault()) {
+    _impl_.script_sig_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionInputProto.script_sig)
+}
+
+// -------------------------------------------------------------------
+
+// TransactionOutputProto
+
+// string address = 1;
+inline void TransactionOutputProto::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& TransactionOutputProto::address() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionOutputProto.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionOutputProto::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionOutputProto.address)
+}
+inline std::string* TransactionOutputProto::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionOutputProto.address)
+  return _s;
+}
+inline const std::string& TransactionOutputProto::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void TransactionOutputProto::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionOutputProto::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionOutputProto::release_address() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionOutputProto.address)
+  return _impl_.address_.Release();
+}
+inline void TransactionOutputProto::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionOutputProto.address)
+}
+
+// string amount = 2;
+inline void TransactionOutputProto::clear_amount() {
+  _impl_.amount_.ClearToEmpty();
+}
+inline const std::string& TransactionOutputProto::amount() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionOutputProto.amount)
+  return _internal_amount();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionOutputProto::set_amount(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.amount_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionOutputProto.amount)
+}
+inline std::string* TransactionOutputProto::mutable_amount() {
+  std::string* _s = _internal_mutable_amount();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionOutputProto.amount)
+  return _s;
+}
+inline const std::string& TransactionOutputProto::_internal_amount() const {
+  return _impl_.amount_.Get();
+}
+inline void TransactionOutputProto::_internal_set_amount(const std::string& value) {
+  
+  _impl_.amount_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionOutputProto::_internal_mutable_amount() {
+  
+  return _impl_.amount_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionOutputProto::release_amount() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionOutputProto.amount)
+  return _impl_.amount_.Release();
+}
+inline void TransactionOutputProto::set_allocated_amount(std::string* amount) {
+  if (amount != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.amount_.SetAllocated(amount, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.amount_.IsDefault()) {
+    _impl_.amount_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionOutputProto.amount)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

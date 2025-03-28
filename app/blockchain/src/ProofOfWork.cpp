@@ -25,9 +25,12 @@ namespace block_chain
   {
     std::vector<uint8_t> input;
 
-    const auto &blockData = block_.data();
-    for (const auto &byte : blockData)
-      input.push_back(byte);
+    for (const auto &transaction : block_.transactions())
+    {
+      const auto &blockData = Transaction::serialize(transaction);
+      for (const auto &byte : blockData)
+        input.push_back(byte);
+    }
 
     const auto &prevHash = block_.prev_hash().toBytes();
     for (const auto &byte : prevHash)

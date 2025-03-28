@@ -10,6 +10,11 @@ namespace block_chain
     hash_ = std::vector<uint8_t>();
   }
 
+  Hash::Hash(const std::string &input)
+  {
+    hash_ = Utils::hexToBytes(input);
+  }
+
   Hash::Hash(const std::vector<uint8_t> &input, bool is_hash)
   {
     if (is_hash)

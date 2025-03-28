@@ -15,6 +15,6 @@ namespace block_chain
     void printBlockchain();
 
   private:
-    std::unique_ptr<Blockchain> blockchain_;
+    Blockchain blockchain_;
   };
 }
