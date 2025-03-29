@@ -20,10 +20,10 @@ namespace block_chain
   std::vector<uint8_t> Utils::hexToBytes(const std::string &hex)
   {
     std::vector<uint8_t> bytes;
-    if (hex.size() % 2 != 0)
-    {
-      exit(1);
-    }
+    // if (hex.size() % 2 != 0)
+    // {
+    //   exit(-1);
+    // }
     for (size_t i = 0; i < hex.size(); i += 2)
     {
       std::string byte_str = hex.substr(i, 2);

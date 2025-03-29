@@ -605,7 +605,8 @@ class TransactionInputProto final :
 
   enum : int {
     kTxIdFieldNumber = 1,
-    kScriptSigFieldNumber = 3,
+    kSignatureFieldNumber = 3,
+    kPublicKeyFieldNumber = 4,
     kVoutFieldNumber = 2,
   };
   // string tx_id = 1;
@@ -622,18 +623,32 @@ class TransactionInputProto final :
   std::string* _internal_mutable_tx_id();
   public:
 
-  // string script_sig = 3;
-  void clear_script_sig();
-  const std::string& script_sig() const;
+  // string signature = 3;
+  void clear_signature();
+  const std::string& signature() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_script_sig(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_script_sig();
-  PROTOBUF_NODISCARD std::string* release_script_sig();
-  void set_allocated_script_sig(std::string* script_sig);
+  void set_signature(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_signature();
+  PROTOBUF_NODISCARD std::string* release_signature();
+  void set_allocated_signature(std::string* signature);
   private:
-  const std::string& _internal_script_sig() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_script_sig(const std::string& value);
-  std::string* _internal_mutable_script_sig();
+  const std::string& _internal_signature() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_signature(const std::string& value);
+  std::string* _internal_mutable_signature();
+  public:
+
+  // string public_key = 4;
+  void clear_public_key();
+  const std::string& public_key() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_public_key(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_public_key();
+  PROTOBUF_NODISCARD std::string* release_public_key();
+  void set_allocated_public_key(std::string* public_key);
+  private:
+  const std::string& _internal_public_key() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_public_key(const std::string& value);
+  std::string* _internal_mutable_public_key();
   public:
 
   // int64 vout = 2;
@@ -654,7 +669,8 @@ class TransactionInputProto final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr tx_id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr script_sig_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr signature_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr public_key_;
     int64_t vout_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -784,21 +800,21 @@ class TransactionOutputProto final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kAddressFieldNumber = 1,
+    kPublicKeyFieldNumber = 1,
     kAmountFieldNumber = 2,
   };
-  // string address = 1;
-  void clear_address();
-  const std::string& address() const;
+  // string public_key = 1;
+  void clear_public_key();
+  const std::string& public_key() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_address(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_address();
-  PROTOBUF_NODISCARD std::string* release_address();
-  void set_allocated_address(std::string* address);
+  void set_public_key(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_public_key();
+  PROTOBUF_NODISCARD std::string* release_public_key();
+  void set_allocated_public_key(std::string* public_key);
   private:
-  const std::string& _internal_address() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
-  std::string* _internal_mutable_address();
+  const std::string& _internal_public_key() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_public_key(const std::string& value);
+  std::string* _internal_mutable_public_key();
   public:
 
   // string amount = 2;
@@ -823,7 +839,7 @@ class TransactionOutputProto final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr public_key_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr amount_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1249,108 +1265,158 @@ inline void TransactionInputProto::set_vout(int64_t value) {
   // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.vout)
 }
 
-// string script_sig = 3;
-inline void TransactionInputProto::clear_script_sig() {
-  _impl_.script_sig_.ClearToEmpty();
+// string signature = 3;
+inline void TransactionInputProto::clear_signature() {
+  _impl_.signature_.ClearToEmpty();
 }
-inline const std::string& TransactionInputProto::script_sig() const {
-  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.script_sig)
-  return _internal_script_sig();
+inline const std::string& TransactionInputProto::signature() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.signature)
+  return _internal_signature();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void TransactionInputProto::set_script_sig(ArgT0&& arg0, ArgT... args) {
+void TransactionInputProto::set_signature(ArgT0&& arg0, ArgT... args) {
  
- _impl_.script_sig_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.script_sig)
+ _impl_.signature_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.signature)
 }
-inline std::string* TransactionInputProto::mutable_script_sig() {
-  std::string* _s = _internal_mutable_script_sig();
-  // @@protoc_insertion_point(field_mutable:block_chain.TransactionInputProto.script_sig)
+inline std::string* TransactionInputProto::mutable_signature() {
+  std::string* _s = _internal_mutable_signature();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionInputProto.signature)
   return _s;
 }
-inline const std::string& TransactionInputProto::_internal_script_sig() const {
-  return _impl_.script_sig_.Get();
+inline const std::string& TransactionInputProto::_internal_signature() const {
+  return _impl_.signature_.Get();
 }
-inline void TransactionInputProto::_internal_set_script_sig(const std::string& value) {
+inline void TransactionInputProto::_internal_set_signature(const std::string& value) {
   
-  _impl_.script_sig_.Set(value, GetArenaForAllocation());
+  _impl_.signature_.Set(value, GetArenaForAllocation());
 }
-inline std::string* TransactionInputProto::_internal_mutable_script_sig() {
+inline std::string* TransactionInputProto::_internal_mutable_signature() {
   
-  return _impl_.script_sig_.Mutable(GetArenaForAllocation());
+  return _impl_.signature_.Mutable(GetArenaForAllocation());
 }
-inline std::string* TransactionInputProto::release_script_sig() {
-  // @@protoc_insertion_point(field_release:block_chain.TransactionInputProto.script_sig)
-  return _impl_.script_sig_.Release();
+inline std::string* TransactionInputProto::release_signature() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionInputProto.signature)
+  return _impl_.signature_.Release();
 }
-inline void TransactionInputProto::set_allocated_script_sig(std::string* script_sig) {
-  if (script_sig != nullptr) {
+inline void TransactionInputProto::set_allocated_signature(std::string* signature) {
+  if (signature != nullptr) {
     
   } else {
     
   }
-  _impl_.script_sig_.SetAllocated(script_sig, GetArenaForAllocation());
+  _impl_.signature_.SetAllocated(signature, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.script_sig_.IsDefault()) {
-    _impl_.script_sig_.Set("", GetArenaForAllocation());
+  if (_impl_.signature_.IsDefault()) {
+    _impl_.signature_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionInputProto.script_sig)
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionInputProto.signature)
+}
+
+// string public_key = 4;
+inline void TransactionInputProto::clear_public_key() {
+  _impl_.public_key_.ClearToEmpty();
+}
+inline const std::string& TransactionInputProto::public_key() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionInputProto.public_key)
+  return _internal_public_key();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionInputProto::set_public_key(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.public_key_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionInputProto.public_key)
+}
+inline std::string* TransactionInputProto::mutable_public_key() {
+  std::string* _s = _internal_mutable_public_key();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionInputProto.public_key)
+  return _s;
+}
+inline const std::string& TransactionInputProto::_internal_public_key() const {
+  return _impl_.public_key_.Get();
+}
+inline void TransactionInputProto::_internal_set_public_key(const std::string& value) {
+  
+  _impl_.public_key_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::_internal_mutable_public_key() {
+  
+  return _impl_.public_key_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionInputProto::release_public_key() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionInputProto.public_key)
+  return _impl_.public_key_.Release();
+}
+inline void TransactionInputProto::set_allocated_public_key(std::string* public_key) {
+  if (public_key != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.public_key_.SetAllocated(public_key, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.public_key_.IsDefault()) {
+    _impl_.public_key_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionInputProto.public_key)
 }
 
 // -------------------------------------------------------------------
 
 // TransactionOutputProto
 
-// string address = 1;
-inline void TransactionOutputProto::clear_address() {
-  _impl_.address_.ClearToEmpty();
+// string public_key = 1;
+inline void TransactionOutputProto::clear_public_key() {
+  _impl_.public_key_.ClearToEmpty();
 }
-inline const std::string& TransactionOutputProto::address() const {
-  // @@protoc_insertion_point(field_get:block_chain.TransactionOutputProto.address)
-  return _internal_address();
+inline const std::string& TransactionOutputProto::public_key() const {
+  // @@protoc_insertion_point(field_get:block_chain.TransactionOutputProto.public_key)
+  return _internal_public_key();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void TransactionOutputProto::set_address(ArgT0&& arg0, ArgT... args) {
+void TransactionOutputProto::set_public_key(ArgT0&& arg0, ArgT... args) {
  
- _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:block_chain.TransactionOutputProto.address)
+ _impl_.public_key_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:block_chain.TransactionOutputProto.public_key)
 }
-inline std::string* TransactionOutputProto::mutable_address() {
-  std::string* _s = _internal_mutable_address();
-  // @@protoc_insertion_point(field_mutable:block_chain.TransactionOutputProto.address)
+inline std::string* TransactionOutputProto::mutable_public_key() {
+  std::string* _s = _internal_mutable_public_key();
+  // @@protoc_insertion_point(field_mutable:block_chain.TransactionOutputProto.public_key)
   return _s;
 }
-inline const std::string& TransactionOutputProto::_internal_address() const {
-  return _impl_.address_.Get();
+inline const std::string& TransactionOutputProto::_internal_public_key() const {
+  return _impl_.public_key_.Get();
 }
-inline void TransactionOutputProto::_internal_set_address(const std::string& value) {
+inline void TransactionOutputProto::_internal_set_public_key(const std::string& value) {
   
-  _impl_.address_.Set(value, GetArenaForAllocation());
+  _impl_.public_key_.Set(value, GetArenaForAllocation());
 }
-inline std::string* TransactionOutputProto::_internal_mutable_address() {
+inline std::string* TransactionOutputProto::_internal_mutable_public_key() {
   
-  return _impl_.address_.Mutable(GetArenaForAllocation());
+  return _impl_.public_key_.Mutable(GetArenaForAllocation());
 }
-inline std::string* TransactionOutputProto::release_address() {
-  // @@protoc_insertion_point(field_release:block_chain.TransactionOutputProto.address)
-  return _impl_.address_.Release();
+inline std::string* TransactionOutputProto::release_public_key() {
+  // @@protoc_insertion_point(field_release:block_chain.TransactionOutputProto.public_key)
+  return _impl_.public_key_.Release();
 }
-inline void TransactionOutputProto::set_allocated_address(std::string* address) {
-  if (address != nullptr) {
+inline void TransactionOutputProto::set_allocated_public_key(std::string* public_key) {
+  if (public_key != nullptr) {
     
   } else {
     
   }
-  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+  _impl_.public_key_.SetAllocated(public_key, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.address_.IsDefault()) {
-    _impl_.address_.Set("", GetArenaForAllocation());
+  if (_impl_.public_key_.IsDefault()) {
+    _impl_.public_key_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionOutputProto.address)
+  // @@protoc_insertion_point(field_set_allocated:block_chain.TransactionOutputProto.public_key)
 }
 
 // string amount = 2;

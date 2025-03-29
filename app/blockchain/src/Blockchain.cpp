@@ -35,7 +35,7 @@ namespace block_chain
       {
         // create the first block
         Blockchain blockchain(db);
-        Transaction coinbase_transaction = Transaction::createCoinbaseTransaction("Min", "10");
+        Transaction coinbase_transaction = Transaction::createCoinbaseTransaction("0363AB2AD907F806783EB46047DC0739C76DD43FB1E6029E48C0700F947BDA8EE3", "10");
         blockchain.addBlock(std::vector<Transaction>({coinbase_transaction}));
         return blockchain;
       }
@@ -93,10 +93,14 @@ namespace block_chain
   {
     last_block_.print();
     Hash currentHash = last_block_.prev_hash();
-    do
+    while (!currentHash.isEmpty())
     {
       std::cout << "--------------------------------" << std::endl;
       std::string current_block_serialized;
+      if (currentHash.isEmpty())
+      {
+        break;
+      }
       leveldb::Status status = db_->Get(leveldb::ReadOptions(), currentHash.toHex(), &current_block_serialized);
       if (!status.ok())
       {
@@ -106,12 +110,14 @@ namespace block_chain
       Block current_block = Block::deserialize(std::vector<uint8_t>(current_block_serialized.begin(), current_block_serialized.end()));
       current_block.print();
       currentHash = current_block.prev_hash();
-    } while (!currentHash.isEmpty());
+    };
   }
 
   Block Blockchain::block(const std::string &hash) const
   {
     std::string block_serialized;
+    assert(db_ != nullptr);
+    // assert(hash.empty() == false);
     leveldb::Status status = db_->Get(leveldb::ReadOptions(), hash, &block_serialized);
     if (!status.ok())
     {
@@ -164,7 +170,7 @@ namespace block_chain
         }
       }
       current_block = block(current_block.prev_hash().toHex());
-    } while (!current_block.hash().isEmpty());
+    } while (!current_block.prev_hash().isEmpty());
 
     return unspent_transactions;
   }
@@ -220,7 +226,7 @@ namespace block_chain
     return outputs;
   }
 
-  std::optional<Transaction> Blockchain::createTransaction(const std::string &from, const std::string &to, std::string amount)
+  std::optional<Transaction> Blockchain::createTransaction(const std::string &from, const std::string &to, std::string amount, Wallet &wallet)
   {
     // build the input list
     std::vector<TransactionInput> inputs;
@@ -233,7 +239,11 @@ namespace block_chain
 
     for (const auto &output : unspent_transactions_outputs)
     {
-      inputs.push_back(TransactionInput(std::get<0>(output), std::get<1>(output), std::get<2>(output).address()));
+      // TODO: get the signature
+      TransactionInput input(std::get<0>(output), std::get<1>(output), std::get<2>(output).public_key());
+      std::string message = input.message();
+      input.sign(Utils::bytesToHex(wallet.sign(message)));
+      inputs.push_back(input);
     }
 
     double total_amount = 0;

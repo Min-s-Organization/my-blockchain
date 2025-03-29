@@ -57,7 +57,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR TransactionInputProto::TransactionInputProto(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.tx_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.script_sig_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.signature_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.public_key_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.vout_)*/int64_t{0}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TransactionInputProtoDefaultTypeInternal {
@@ -71,7 +72,7 @@ struct TransactionInputProtoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TransactionInputProtoDefaultTypeInternal _TransactionInputProto_default_instance_;
 PROTOBUF_CONSTEXPR TransactionOutputProto::TransactionOutputProto(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.address_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.public_key_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.amount_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TransactionOutputProtoDefaultTypeInternal {
@@ -118,21 +119,22 @@ const uint32_t TableStruct_block_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(pr
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::block_chain::TransactionInputProto, _impl_.tx_id_),
   PROTOBUF_FIELD_OFFSET(::block_chain::TransactionInputProto, _impl_.vout_),
-  PROTOBUF_FIELD_OFFSET(::block_chain::TransactionInputProto, _impl_.script_sig_),
+  PROTOBUF_FIELD_OFFSET(::block_chain::TransactionInputProto, _impl_.signature_),
+  PROTOBUF_FIELD_OFFSET(::block_chain::TransactionInputProto, _impl_.public_key_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::block_chain::TransactionOutputProto, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::block_chain::TransactionOutputProto, _impl_.address_),
+  PROTOBUF_FIELD_OFFSET(::block_chain::TransactionOutputProto, _impl_.public_key_),
   PROTOBUF_FIELD_OFFSET(::block_chain::TransactionOutputProto, _impl_.amount_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::block_chain::BlockProto)},
   { 12, -1, -1, sizeof(::block_chain::TransactionProto)},
   { 21, -1, -1, sizeof(::block_chain::TransactionInputProto)},
-  { 30, -1, -1, sizeof(::block_chain::TransactionOutputProto)},
+  { 31, -1, -1, sizeof(::block_chain::TransactionOutputProto)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -151,14 +153,15 @@ const char descriptor_table_protodef_block_2eproto[] PROTOBUF_SECTION_VARIABLE(p
   "\022\r\n\005tx_id\030\001 \001(\t\0222\n\006inputs\030\002 \003(\0132\".block_"
   "chain.TransactionInputProto\0224\n\007outputs\030\003"
   " \003(\0132#.block_chain.TransactionOutputProt"
-  "o\"H\n\025TransactionInputProto\022\r\n\005tx_id\030\001 \001("
-  "\t\022\014\n\004vout\030\002 \001(\003\022\022\n\nscript_sig\030\003 \001(\t\"9\n\026T"
-  "ransactionOutputProto\022\017\n\007address\030\001 \001(\t\022\016"
-  "\n\006amount\030\002 \001(\tb\006proto3"
+  "o\"[\n\025TransactionInputProto\022\r\n\005tx_id\030\001 \001("
+  "\t\022\014\n\004vout\030\002 \001(\003\022\021\n\tsignature\030\003 \001(\t\022\022\n\npu"
+  "blic_key\030\004 \001(\t\"<\n\026TransactionOutputProto"
+  "\022\022\n\npublic_key\030\001 \001(\t\022\016\n\006amount\030\002 \001(\tb\006pr"
+  "oto3"
   ;
 static ::_pbi::once_flag descriptor_table_block_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_block_2eproto = {
-    false, false, 462, descriptor_table_protodef_block_2eproto,
+    false, false, 484, descriptor_table_protodef_block_2eproto,
     "block.proto",
     &descriptor_table_block_2eproto_once, nullptr, 0, 4,
     schemas, file_default_instances, TableStruct_block_2eproto::offsets,
@@ -822,7 +825,8 @@ TransactionInputProto::TransactionInputProto(const TransactionInputProto& from)
   TransactionInputProto* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.tx_id_){}
-    , decltype(_impl_.script_sig_){}
+    , decltype(_impl_.signature_){}
+    , decltype(_impl_.public_key_){}
     , decltype(_impl_.vout_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -835,12 +839,20 @@ TransactionInputProto::TransactionInputProto(const TransactionInputProto& from)
     _this->_impl_.tx_id_.Set(from._internal_tx_id(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.script_sig_.InitDefault();
+  _impl_.signature_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.script_sig_.Set("", GetArenaForAllocation());
+    _impl_.signature_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_script_sig().empty()) {
-    _this->_impl_.script_sig_.Set(from._internal_script_sig(), 
+  if (!from._internal_signature().empty()) {
+    _this->_impl_.signature_.Set(from._internal_signature(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.public_key_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.public_key_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_public_key().empty()) {
+    _this->_impl_.public_key_.Set(from._internal_public_key(), 
       _this->GetArenaForAllocation());
   }
   _this->_impl_.vout_ = from._impl_.vout_;
@@ -853,7 +865,8 @@ inline void TransactionInputProto::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.tx_id_){}
-    , decltype(_impl_.script_sig_){}
+    , decltype(_impl_.signature_){}
+    , decltype(_impl_.public_key_){}
     , decltype(_impl_.vout_){int64_t{0}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -861,9 +874,13 @@ inline void TransactionInputProto::SharedCtor(
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.tx_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.script_sig_.InitDefault();
+  _impl_.signature_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.script_sig_.Set("", GetArenaForAllocation());
+    _impl_.signature_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.public_key_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.public_key_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
@@ -879,7 +896,8 @@ TransactionInputProto::~TransactionInputProto() {
 inline void TransactionInputProto::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.tx_id_.Destroy();
-  _impl_.script_sig_.Destroy();
+  _impl_.signature_.Destroy();
+  _impl_.public_key_.Destroy();
 }
 
 void TransactionInputProto::SetCachedSize(int size) const {
@@ -893,7 +911,8 @@ void TransactionInputProto::Clear() {
   (void) cached_has_bits;
 
   _impl_.tx_id_.ClearToEmpty();
-  _impl_.script_sig_.ClearToEmpty();
+  _impl_.signature_.ClearToEmpty();
+  _impl_.public_key_.ClearToEmpty();
   _impl_.vout_ = int64_t{0};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -922,13 +941,23 @@ const char* TransactionInputProto::_InternalParse(const char* ptr, ::_pbi::Parse
         } else
           goto handle_unusual;
         continue;
-      // string script_sig = 3;
+      // string signature = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_script_sig();
+          auto str = _internal_mutable_signature();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "block_chain.TransactionInputProto.script_sig"));
+          CHK_(::_pbi::VerifyUTF8(str, "block_chain.TransactionInputProto.signature"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string public_key = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          auto str = _internal_mutable_public_key();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "block_chain.TransactionInputProto.public_key"));
         } else
           goto handle_unusual;
         continue;
@@ -977,14 +1006,24 @@ uint8_t* TransactionInputProto::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_vout(), target);
   }
 
-  // string script_sig = 3;
-  if (!this->_internal_script_sig().empty()) {
+  // string signature = 3;
+  if (!this->_internal_signature().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_script_sig().data(), static_cast<int>(this->_internal_script_sig().length()),
+      this->_internal_signature().data(), static_cast<int>(this->_internal_signature().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "block_chain.TransactionInputProto.script_sig");
+      "block_chain.TransactionInputProto.signature");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_script_sig(), target);
+        3, this->_internal_signature(), target);
+  }
+
+  // string public_key = 4;
+  if (!this->_internal_public_key().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_public_key().data(), static_cast<int>(this->_internal_public_key().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "block_chain.TransactionInputProto.public_key");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_public_key(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1010,11 +1049,18 @@ size_t TransactionInputProto::ByteSizeLong() const {
         this->_internal_tx_id());
   }
 
-  // string script_sig = 3;
-  if (!this->_internal_script_sig().empty()) {
+  // string signature = 3;
+  if (!this->_internal_signature().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_script_sig());
+        this->_internal_signature());
+  }
+
+  // string public_key = 4;
+  if (!this->_internal_public_key().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_public_key());
   }
 
   // int64 vout = 2;
@@ -1043,8 +1089,11 @@ void TransactionInputProto::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, 
   if (!from._internal_tx_id().empty()) {
     _this->_internal_set_tx_id(from._internal_tx_id());
   }
-  if (!from._internal_script_sig().empty()) {
-    _this->_internal_set_script_sig(from._internal_script_sig());
+  if (!from._internal_signature().empty()) {
+    _this->_internal_set_signature(from._internal_signature());
+  }
+  if (!from._internal_public_key().empty()) {
+    _this->_internal_set_public_key(from._internal_public_key());
   }
   if (from._internal_vout() != 0) {
     _this->_internal_set_vout(from._internal_vout());
@@ -1073,8 +1122,12 @@ void TransactionInputProto::InternalSwap(TransactionInputProto* other) {
       &other->_impl_.tx_id_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.script_sig_, lhs_arena,
-      &other->_impl_.script_sig_, rhs_arena
+      &_impl_.signature_, lhs_arena,
+      &other->_impl_.signature_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.public_key_, lhs_arena,
+      &other->_impl_.public_key_, rhs_arena
   );
   swap(_impl_.vout_, other->_impl_.vout_);
 }
@@ -1101,17 +1154,17 @@ TransactionOutputProto::TransactionOutputProto(const TransactionOutputProto& fro
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   TransactionOutputProto* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.address_){}
+      decltype(_impl_.public_key_){}
     , decltype(_impl_.amount_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.address_.InitDefault();
+  _impl_.public_key_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.address_.Set("", GetArenaForAllocation());
+    _impl_.public_key_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_address().empty()) {
-    _this->_impl_.address_.Set(from._internal_address(), 
+  if (!from._internal_public_key().empty()) {
+    _this->_impl_.public_key_.Set(from._internal_public_key(), 
       _this->GetArenaForAllocation());
   }
   _impl_.amount_.InitDefault();
@@ -1130,13 +1183,13 @@ inline void TransactionOutputProto::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.address_){}
+      decltype(_impl_.public_key_){}
     , decltype(_impl_.amount_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.address_.InitDefault();
+  _impl_.public_key_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.address_.Set("", GetArenaForAllocation());
+    _impl_.public_key_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.amount_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -1155,7 +1208,7 @@ TransactionOutputProto::~TransactionOutputProto() {
 
 inline void TransactionOutputProto::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.address_.Destroy();
+  _impl_.public_key_.Destroy();
   _impl_.amount_.Destroy();
 }
 
@@ -1169,7 +1222,7 @@ void TransactionOutputProto::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.address_.ClearToEmpty();
+  _impl_.public_key_.ClearToEmpty();
   _impl_.amount_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -1180,13 +1233,13 @@ const char* TransactionOutputProto::_InternalParse(const char* ptr, ::_pbi::Pars
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string address = 1;
+      // string public_key = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_address();
+          auto str = _internal_mutable_public_key();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "block_chain.TransactionOutputProto.address"));
+          CHK_(::_pbi::VerifyUTF8(str, "block_chain.TransactionOutputProto.public_key"));
         } else
           goto handle_unusual;
         continue;
@@ -1229,14 +1282,14 @@ uint8_t* TransactionOutputProto::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string address = 1;
-  if (!this->_internal_address().empty()) {
+  // string public_key = 1;
+  if (!this->_internal_public_key().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_address().data(), static_cast<int>(this->_internal_address().length()),
+      this->_internal_public_key().data(), static_cast<int>(this->_internal_public_key().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "block_chain.TransactionOutputProto.address");
+      "block_chain.TransactionOutputProto.public_key");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_address(), target);
+        1, this->_internal_public_key(), target);
   }
 
   // string amount = 2;
@@ -1265,11 +1318,11 @@ size_t TransactionOutputProto::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string address = 1;
-  if (!this->_internal_address().empty()) {
+  // string public_key = 1;
+  if (!this->_internal_public_key().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_address());
+        this->_internal_public_key());
   }
 
   // string amount = 2;
@@ -1297,8 +1350,8 @@ void TransactionOutputProto::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg,
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_address().empty()) {
-    _this->_internal_set_address(from._internal_address());
+  if (!from._internal_public_key().empty()) {
+    _this->_internal_set_public_key(from._internal_public_key());
   }
   if (!from._internal_amount().empty()) {
     _this->_internal_set_amount(from._internal_amount());
@@ -1323,8 +1376,8 @@ void TransactionOutputProto::InternalSwap(TransactionOutputProto* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.address_, lhs_arena,
-      &other->_impl_.address_, rhs_arena
+      &_impl_.public_key_, lhs_arena,
+      &other->_impl_.public_key_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.amount_, lhs_arena,

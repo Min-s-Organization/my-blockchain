@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Block.h"
+#include "Wallet.h"
 #include <vector>
 #include <memory>
 #include <leveldb/db.h>
@@ -26,7 +27,7 @@ namespace block_chain
     Block block(const std::string &hash) const;
 
     std::string getAddressBalance(const std::string &address) const;
-    std::optional<Transaction> createTransaction(const std::string &from, const std::string &to, std::string amount);
+    std::optional<Transaction> createTransaction(const std::string &from, const std::string &to, std::string amount, Wallet &wallet);
 
   private:
     Block last_block_;

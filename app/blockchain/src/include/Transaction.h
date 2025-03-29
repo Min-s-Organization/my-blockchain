@@ -1,3 +1,6 @@
+#pragma once
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 #include <string>
 #include <vector>
 #include <cstdint>
@@ -8,12 +11,12 @@ namespace block_chain
   class TransactionOutput
   {
   public:
-    TransactionOutput(std::string address, std::string amount) : script_pubkey_(address), amount_(amount) {}
+    TransactionOutput(std::string public_key, std::string amount) : public_key_(public_key), amount_(amount) {}
     ~TransactionOutput() = default;
 
-    const std::string &address() const { return script_pubkey_; }
+    const std::string &public_key() const { return public_key_; }
     const std::string &amount() const { return amount_; }
-    const bool canUnlock(const std::string &data) const { return script_pubkey_ == data; }
+    const bool canUnlock(const std::string &data) const { return public_key_ == data; }
 
     static std::vector<uint8_t> serialize(const TransactionOutput &output);
     static TransactionOutput deserialize(const std::vector<uint8_t> &data);
@@ -22,29 +25,35 @@ namespace block_chain
 
   private:
     std::string amount_;
-    std::string script_pubkey_;
+    std::string public_key_;
   };
 
   class TransactionInput
   {
   public:
-    TransactionInput(std::string tx_id, size_t vout, std::string script_sig) : tx_id_(tx_id), vout_(vout), script_sig_(script_sig) {}
+    TransactionInput(std::string tx_id, size_t vout, std::string public_key) : tx_id_(tx_id), vout_(vout), public_key_(public_key) {}
+    TransactionInput(std::string tx_id, size_t vout, std::string public_key, std::string signature) : tx_id_(tx_id), vout_(vout), public_key_(public_key), signature_(signature) {}
     ~TransactionInput() = default;
 
     const std::string &tx_id() const { return tx_id_; }
     const size_t &vout() const { return vout_; }
-    const std::string &script_sig() const { return script_sig_; }
-    const bool canUnlock(const std::string &data) const { return script_sig_ == data; }
+    const std::string &signature() const { return signature_; }
+    const std::string &public_key() const { return public_key_; }
+    const bool canUnlock(const std::string &data) const { return public_key_ == data; }
 
     static std::vector<uint8_t> serialize(const TransactionInput &input);
     static TransactionInput deserialize(const std::vector<uint8_t> &data);
+    bool verify(const std::string &hex_public_key);
+    void sign(const std::string &signature) { signature_ = signature; }
+    std::string message() const { return tx_id_ + std::to_string(vout_); }
 
     std::string toString() const;
 
   private:
     std::string tx_id_;
     size_t vout_;
-    std::string script_sig_;
+    std::string signature_;
+    std::string public_key_;
   };
 
   class Transaction
